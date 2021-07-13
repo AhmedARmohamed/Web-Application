@@ -11,6 +11,10 @@ var (
 	// ErrNotFound is returned when a resouce cannot be found
 	// in the database
 	ErrNotFound = errors.New("models: resource not found")
+
+	// ErrInvalidID is returned when an invalid is provided
+	// to a method like Delete.
+	ErrInvalidID = errors.New("models: ID provided was invalid")
 )
 
 func NewUserService(connectionInfo string) (*UserService, error) {
@@ -63,7 +67,7 @@ func (us *UserService) ByEmail(email string) (*User, error) {
 
 }
 
-// first will query using the provided gorm.DB and it will 
+// first will query using the provided gorm.DB and it will
 // get the first item returned and place it into dst
 func first(db *gorm.DB, dst interface{}) error {
 	err := db.First(dst).Error
@@ -88,6 +92,17 @@ func (us *UserService) Close() error {
 // in the provided user object
 func (us *UserService) Update(user *User) error {
 	return us.db.Save(user).Error
+}
+
+// Delete deletes the provided user with all of the data
+// in the provided user object
+func (us *UserService) Delete(id uint) error {
+	if id == 0 {
+		return ErrInvalidID
+	}
+
+	user := User{Model: gorm.Model{ID: id}}
+	return us.db.Delete(&user).Error
 }
 
 // DestructiveReset drops the user table and rebuilds it
