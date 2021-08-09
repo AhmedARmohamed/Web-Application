@@ -39,7 +39,7 @@ func (v *View) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Render is used to render the view with predifined layout
+// Render is used to render the view with predefined layout
 func (v *View) Render(w http.ResponseWriter, data interface{}) error {
 	w.Header().Set("Content-Type", "text/html")
 	return v.Template.ExecuteTemplate(w, v.Layout, data)
@@ -56,7 +56,7 @@ func layoutFiles() []string {
 }
 
 // addTemplatePath takes in a slice of strings
-// representing file paths for tempaltes and it prepends
+// representing file paths for templates, and it prepends
 // the TemplateDir directory to each string in the slice
 //
 // Eg the input {"home"} would result in the output
