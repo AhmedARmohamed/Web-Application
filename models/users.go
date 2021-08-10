@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	// ErrNotFound is returned when a resouce cannot be found
+	// ErrNotFound is returned when a resource cannot be found
 	// in the database
 	ErrNotFound = errors.New("models: resource not found")
 
